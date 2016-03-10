@@ -163,7 +163,7 @@ func (s *Server) serve(ln ListenerFile) error {
 	}
 
 	s.listenerMu.Lock()
-	s.listener = newGracefulListener(ln, &s.httpWg)
+	s.listener = ln //s.listener = newGracefulListener(ln, &s.httpWg)
 	s.listenerMu.Unlock()
 
 	if s.tls {

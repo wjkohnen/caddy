@@ -20,7 +20,7 @@ func isLocalhost(host string) bool {
 
 // checkFdlimit issues a warning if the OS max file descriptors is below a recommended minimum.
 func checkFdlimit() {
-	const min = 4096
+	const min = 16384
 
 	// Warn if ulimit is too low for production sites
 	if runtime.GOOS == "linux" || runtime.GOOS == "darwin" {
@@ -29,7 +29,7 @@ func checkFdlimit() {
 			// Note that an error here need not be reported
 			lim, err := strconv.Atoi(string(bytes.TrimSpace(out)))
 			if err == nil && lim < min {
-				fmt.Printf("Warning: File descriptor limit %d is too low for production sites. At least %d is recommended. Set with \"ulimit -n %d\".\n", lim, min, min)
+				fmt.Printf("Warning: File descriptor limit %d is too low for production sites. %d is recommended. Set with \"ulimit -n %d\".\n", lim, min, min)
 			}
 		}
 	}
