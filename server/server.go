@@ -313,7 +313,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 
-	w.Header().Set("Server", "Caddy")
+	w.Header().Set("Server", "kws")
 
 	host, _, err := net.SplitHostPort(r.Host)
 	if err != nil {
