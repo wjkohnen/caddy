@@ -333,7 +333,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Execute the optional request callback if it exists and it's not disabled
-	if s.ReqCallback != nil && !s.vhosts[host].config.TLS.Manual && s.ReqCallback(w, r) {
+	if s.ReqCallback != nil &&
+		s.vhosts[host].config.TLS.Enabled &&
+		!s.vhosts[host].config.TLS.Manual &&
+		s.ReqCallback(w, r) {
 		return
 	}
 
