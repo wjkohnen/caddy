@@ -12,6 +12,7 @@ import (
 	"sync"
 	"text/template"
 
+	"github.com/mholt/caddy/caddyhttp/csp"
 	"github.com/mholt/caddy/caddyhttp/httpserver"
 )
 
@@ -50,6 +51,11 @@ func (t Templates) ServeHTTP(w http.ResponseWriter, r *http.Request) (int, error
 
 				// Add custom functions
 				tpl.Funcs(httpserver.TemplateFuncs)
+
+				// Register Content-Security-Policy cspnonce function
+				tpl.Funcs(template.FuncMap{
+					"cspnonce": func() string { return csp.NonceFromContext(r.Context()) },
+				})
 
 				// Build the template
 				templatePath := filepath.Join(t.Root, fpath)

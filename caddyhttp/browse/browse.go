@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/dustin/go-humanize"
+	"github.com/mholt/caddy/caddyhttp/csp"
 	"github.com/mholt/caddy/caddyhttp/httpserver"
 	"github.com/mholt/caddy/caddyhttp/staticfiles"
 )
@@ -72,6 +73,9 @@ type Listing struct {
 
 	// If ≠0 then Items have been limited to that many elements
 	ItemsLimitedTo int
+
+	// The Content Security Policy Level 2 (CSP) nonce, if set by csp plugin
+	CSPNonce string
 
 	// Optional custom variables for use in browse templates
 	User interface{}
@@ -457,6 +461,9 @@ func (b Browse) ServeListing(w http.ResponseWriter, r *http.Request, requestedFi
 		URL:  r.URL,
 	}
 	listing.User = bc.Variables
+
+	// Reference the CSP nonce from request context. Empty string if unset.
+	listing.CSPNonce = csp.NonceFromContext(r.Context())
 
 	// Copy the query values into the Listing struct
 	var limit int

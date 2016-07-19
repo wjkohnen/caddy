@@ -468,6 +468,7 @@ var directives = []string{
 	"basicauth",
 	"redir",
 	"status",
+	"cspnonce",
 	"cors", // github.com/captncraig/cors/caddy
 	"mime",
 	"login",     // github.com/tarent/loginsrv/caddy

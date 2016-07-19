@@ -104,7 +104,7 @@ const defaultTemplate = `<!DOCTYPE html>
 		<title>{{html .Name}}</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
+<style{{if .CSPNonce}} nonce="{{.CSPNonce}}"{{end}}>
 * { padding: 0; margin: 0; }
 
 body {
@@ -446,7 +446,7 @@ footer {
 		<footer>
 			Served with <a rel="noopener noreferrer" href="https://caddyserver.com">Caddy</a>
 		</footer>
-		<script>
+		<script type="text/javascript"{{if .CSPNonce}} nonce="{{.CSPNonce}}"{{end}}>
 			var filterEl = document.getElementById('filter');
 			filterEl.focus();
 
